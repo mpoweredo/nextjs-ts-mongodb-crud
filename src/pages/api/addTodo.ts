@@ -2,11 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../lib/prisma';
 
-type Data = {
-	title: string;
-};
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method !== 'POST') return;
 	const { title } = req.body;
 
@@ -19,8 +15,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 				isCompleted: false,
 			},
 		});
-		res.status(200);
+		res.status(200).json({});
 	} catch (error) {
-		res.status(422);
+		if (error instanceof Error) res.status(422).json({ message: error.message });
 	}
 }
