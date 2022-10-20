@@ -7,7 +7,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 	try {
 		const result = await prisma.todo.findMany({});
-		console.log(result);
 		res.status(200).json(result);
 	} catch (error) {
 		if (error instanceof Error) res.status(422).json({ message: error.message });

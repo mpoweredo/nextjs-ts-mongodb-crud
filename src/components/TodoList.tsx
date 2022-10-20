@@ -1,4 +1,4 @@
-import { Box, Center, List, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Center, List, Spinner, Stack, Text } from '@chakra-ui/react';
 import { TodoType } from '../types/TodoTypes';
 import TodoItem from './TodoItem';
 
