@@ -14,6 +14,7 @@ const AddTodo = ({ refetch }: Props) => {
 
 	const addTodoHandler = async (e: React.FormEvent) => {
 		e.preventDefault();
+		if (todoTitle.trim().length === 0) return;
 		try {
 			setLoading(true);
 			await fetch('/api/addTodo', {
