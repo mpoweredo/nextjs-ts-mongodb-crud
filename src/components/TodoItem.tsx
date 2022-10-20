@@ -13,8 +13,14 @@ const TodoItem = ({ todo }: { todo: TodoType }) => {
 	const editTodoHandler = (nextValue: string) => console.log('edited todo: ', nextValue);
 
 	return (
-		<ListItem bg='gray.600' minHeight={{ base: '16', sm: '12' }} display='flex' py='2' flexDirection='column'>
-			<Flex gap='2' h='full' px='3' _hover={{ bg: 'gray.500' }} cursor='pointer' rounded='2'>
+		<ListItem
+			bg='gray.600'
+			_hover={{ bg: 'gray.500' }}
+			minHeight={{ base: '14', sm: '12' }}
+			display='flex'
+			justifyContent='center'
+			flexDirection='column'>
+			<Flex gap='2' h='full' w='full' px='3' cursor='pointer' rounded='2'>
 				<Center w='full' justifyContent='start' gap='1'>
 					<Checkbox borderColor='gray.400' onChange={toggleChecked} isChecked={isChecked} colorScheme='purple' />
 					<Editable onSubmit={editTodoHandler} defaultValue={todo.title} w='full'>

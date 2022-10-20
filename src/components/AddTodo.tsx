@@ -1,5 +1,5 @@
-import { Flex, Input, Button } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Flex, Input, Button, FormControl, FormErrorMessage, Box } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 
 type Props = {
@@ -12,7 +12,8 @@ const AddTodo = ({ refetch }: Props) => {
 	const changeTodoTitle = ({ target }: React.ChangeEvent<HTMLInputElement>) => setTodoTitle(target.value);
 	const toast = useToast();
 
-	const addTodoHandler = async () => {
+	const addTodoHandler = async (e: React.FormEvent) => {
+		e.preventDefault();
 		try {
 			setLoading(true);
 			await fetch('/api/addTodo', {
@@ -23,7 +24,7 @@ const AddTodo = ({ refetch }: Props) => {
 				},
 			});
 			setTodoTitle('');
-			refetch()
+			refetch();
 		} catch (error) {
 			if (error instanceof Error) {
 				toast({
@@ -39,23 +40,27 @@ const AddTodo = ({ refetch }: Props) => {
 	};
 
 	return (
-		<Flex gap='2' direction={{ base: 'column', sm: 'row' }}>
-			<Input
-				value={todoTitle}
-				onChange={changeTodoTitle}
-				placeholder='Make dinner...'
-				_focus={{ bg: 'gray.900' }}
-				_hover={{ bg: 'gray.600' }}
-				variant='filled'
-				maxWidth='8xl'
-				bg='gray.700'
-				maxLength={35}
-				isDisabled={isLoading}
-			/>
-			<Button isLoading={isLoading} onClick={addTodoHandler} _hover={{ bg: 'purple.400' }} bg='purple.500'>
-				Add todo
-			</Button>
-		</Flex>
+		<form onSubmit={addTodoHandler}>
+			<Box>
+				<Flex gap='2' direction={{ base: 'column', sm: 'row' }}>
+					<Input
+						value={todoTitle}
+						onChange={changeTodoTitle}
+						placeholder='Make dinner...'
+						_focus={{ bg: 'gray.900' }}
+						_hover={{ bg: 'gray.600' }}
+						variant='filled'
+						maxWidth='8xl'
+						bg='gray.700'
+						maxLength={35}
+						isDisabled={isLoading}
+					/>
+					<Button type='submit' isLoading={isLoading} _hover={{ bg: 'purple.400' }} bg='purple.500'>
+						Add todo
+					</Button>
+				</Flex>
+			</Box>
+		</form>
 	);
 };
 

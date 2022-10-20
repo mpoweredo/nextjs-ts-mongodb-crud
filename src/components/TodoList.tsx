@@ -9,7 +9,7 @@ type Props = {
 
 const TodoList = ({ todos, isLoading }: Props) => {
 	return (
-		<Stack bg='gray.700' height='300px' direction='column' p='4' rounded='5'>
+		<Stack bg='gray.700' minHeight='300px' maxHeight='70vh' direction='column' p='4' rounded='5'>
 			<List
 				h='full'
 				display='flex'
