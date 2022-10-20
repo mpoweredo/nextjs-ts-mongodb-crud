@@ -1,9 +1,10 @@
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Center, Checkbox, Editable, EditableInput, EditablePreview, Flex, IconButton, ListItem } from '@chakra-ui/react';
 import { useState } from 'react';
+import { TodoType } from '../types/TodoTypes';
 
-const TodoItem = () => {
-	const [isChecked, setIsChecked] = useState(false);
+const TodoItem = ({ todo }: { todo: TodoType }) => {
+	const [isChecked, setIsChecked] = useState(todo.isCompleted);
 
 	const toggleChecked = () => setIsChecked(prevState => !prevState);
 
@@ -12,13 +13,13 @@ const TodoItem = () => {
 	const editTodoHandler = (nextValue: string) => console.log('edited todo: ', nextValue);
 
 	return (
-		<ListItem>
-			<Flex gap='2' bg='gray.600' height='45' px='3' _hover={{ bg: 'gray.500' }} cursor='pointer' rounded='2'>
+		<ListItem bg='gray.600' minHeight={{ base: '16', sm: '12' }} display='flex' py='2' flexDirection='column'>
+			<Flex gap='2' h='full' px='3' _hover={{ bg: 'gray.500' }} cursor='pointer' rounded='2'>
 				<Center w='full' justifyContent='start' gap='1'>
 					<Checkbox borderColor='gray.400' onChange={toggleChecked} isChecked={isChecked} colorScheme='purple' />
-
-					<Editable onSubmit={editTodoHandler} defaultValue='Make some cool website.' w='full'>
+					<Editable onSubmit={editTodoHandler} defaultValue={todo.title} w='full'>
 						<EditablePreview
+							wordBreak='break-all'
 							color={isChecked ? 'gray.400' : ''}
 							fontWeight='medium'
 							as={isChecked ? 's' : 'p'}

@@ -2,7 +2,11 @@ import { Flex, Input, Button } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 
-const AddTodo = () => {
+type Props = {
+	refetch: () => void;
+};
+
+const AddTodo = ({ refetch }: Props) => {
 	const [todoTitle, setTodoTitle] = useState('');
 	const [isLoading, setLoading] = useState(false);
 	const changeTodoTitle = ({ target }: React.ChangeEvent<HTMLInputElement>) => setTodoTitle(target.value);
@@ -19,6 +23,7 @@ const AddTodo = () => {
 				},
 			});
 			setTodoTitle('');
+			refetch()
 		} catch (error) {
 			if (error instanceof Error) {
 				toast({
@@ -44,6 +49,7 @@ const AddTodo = () => {
 				variant='filled'
 				maxWidth='8xl'
 				bg='gray.700'
+				maxLength={35}
 				isDisabled={isLoading}
 			/>
 			<Button isLoading={isLoading} onClick={addTodoHandler} _hover={{ bg: 'purple.400' }} bg='purple.500'>
